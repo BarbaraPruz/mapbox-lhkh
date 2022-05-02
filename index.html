@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Display a map on a webpage</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .places-section {
+        display: flex;
+        height: 80vh;
+        width: 95vw;
+        margin: 50px auto;
+      }
+      .places-list {
+        margin-right: 20px;
+      }
+      #map {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="places-section">
+      <div class="places-list">
+        <h2>Places</h2>
+        <select name="place" id="placeSelector">
+          <option value="" disabled selected hidden>Choose a place</option>
+          <option value="hawea">Hawea Heaiau</option>
+          <option value="kaiwi">Ka Iwi Coastline</option>
+          <option value="nursery">
+            Kamilonui Valley - Aloha 'Aina 'O Kamilo Nui Nursery
+          </option>
+          <option value="wetlands">Keawawa Wetlands</option>
+          <option value="paikoRidge">Paiko Ridge</option>
+        </select>
+      </div>
+      <div id="map"></div>
+    </section>
+
+    <script>
+      const defaultCenter = [-157.6942438755041, 21.295308977618873]
+      const placesList = {
+        wetlands: {
+          label: 'Keawawa Wetlands',
+          loc: [-157.70603082595395, 21.288198161959343],
+          marker: null,
+        },
+        hawea: {
+          label: 'Hawea Heaiau',
+          loc: [-157.70517203226035, 21.28788658363102],
+          marker: null,
+        },
+        kaiwi: {
+          label: 'Ka Iwi Coastline',
+          loc: [-157.65671287191415, 21.303521276031532],
+          marker: null,
+        },
+        paikoRidge: {
+          label: 'Paiko Ridge',
+          loc: [-157.72767071638125, 21.29151426434801],
+          marker: null,
+        },
+        nursery: {
+          label: `Aloha 'Aina 'O Kamilo Nui Nursery`,
+          loc: [-157.69480882031755, 21.308139635919417],
+          marker: null,
+        },
+      }
+      mapboxgl.accessToken =
+        'pk.eyJ1IjoiYmFyYmFyYTgwOCIsImEiOiJjbDJtcDI1OHUwdnVrM2pycTY2M2V5YjJiIn0.LTbI07MypH0XanrHpHTlug'
+      const map = new mapboxgl.Map({
+        container: 'map', // container id in html. cannot have child elements
+        style: 'mapbox://styles/mapbox/outdoors-v11',
+        center: defaultCenter,
+        zoom: 13,
+      })
+      // marker  - maybe better with map onLoad?
+      for (let place in placesList) {
+        placesList[place].marker = new mapboxgl.Marker()
+          .setLngLat(placesList[place].loc)
+          .setPopup(
+            new mapboxgl.Popup().setHTML(`<h1>${placesList[place].label}</h1>`),
+          )
+          .addTo(map)
+      }
+
+      const placeSelector = document.getElementById('placeSelector')
+      // to do: add options dynamically here....
+      placeSelector.onchange = () => {
+        const loc = placesList[placeSelector.value].loc
+        if (loc) {
+          map.flyTo({ center: loc })
+        } else {
+          console.log('how did this happen', placeSelector.value)
+        }
+      }
+    </script>
+  </body>
+</html>
