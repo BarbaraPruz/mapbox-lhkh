@@ -18,7 +18,7 @@
       }
       .places-section {
         display: flex;
-        height: 80vh;
+        height: 100vh;
         width: 95vw;
         margin: 50px auto;
       }
@@ -55,30 +55,55 @@
           label: 'Keawawa Wetlands',
           loc: [-157.70603082595395, 21.288198161959343],
           marker: null,
+          image: 'assets/images/alaeula3.jpg',
         },
         hawea: {
           label: 'Hawea Heaiau',
           loc: [-157.70517203226035, 21.28788658363102],
           marker: null,
+          image: 'assets/images/heiau.jpg',
         },
         kaiwi: {
           label: 'Ka Iwi Coastline',
           loc: [-157.65671287191415, 21.303521276031532],
           marker: null,
+          image: 'assets/images/kaiwi.jpeg',
         },
         paikoRidge: {
           label: 'Paiko Ridge',
           loc: [-157.72767071638125, 21.29151426434801],
           marker: null,
+          image: 'assets/images/wall.jpeg',
         },
         nursery: {
           label: `Aloha 'Aina 'O Kamilo Nui Nursery`,
           loc: [-157.69480882031755, 21.308139635919417],
           marker: null,
+          image: './assets/images/nursery.jpeg',
         },
       }
+
       mapboxgl.accessToken =
         'pk.eyJ1IjoiYmFyYmFyYTgwOCIsImEiOiJjbDJtcDI1OHUwdnVrM2pycTY2M2V5YjJiIn0.LTbI07MypH0XanrHpHTlug'
+
+      const buildPopup = (place) => {
+        const popup = new mapboxgl.Popup({ maxWidth: '500px' })
+        popup.setHTML(buildPopupHTML(place))
+        return popup
+      }
+
+      const buildPopupHTML = (place) => {
+        const { label, image } = place
+        return `
+                <div>
+                  <h2>${label}</h2>
+                  <div style="width:400px; height:400px;">
+                    <img src=${image} alt=${label} style="width:100%; height:100%;object-fit:scale-down;" />
+                  </div>
+                </div>
+              `
+      }
+
       const map = new mapboxgl.Map({
         container: 'map', // container id in html. cannot have child elements
         style: 'mapbox://styles/mapbox/outdoors-v11',
@@ -86,12 +111,10 @@
         zoom: 13,
       })
       // marker  - maybe better with map onLoad?
-      for (let place in placesList) {
-        placesList[place].marker = new mapboxgl.Marker()
-          .setLngLat(placesList[place].loc)
-          .setPopup(
-            new mapboxgl.Popup().setHTML(`<h1>${placesList[place].label}</h1>`),
-          )
+      for (let placeName in placesList) {
+        placesList[placeName].marker = new mapboxgl.Marker()
+          .setLngLat(placesList[placeName].loc)
+          .setPopup(buildPopup(placesList[placeName]))
           .addTo(map)
       }
 
