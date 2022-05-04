@@ -28,6 +28,15 @@
       #map {
         flex: 1;
       }
+      .testpopup {
+        background: #f6f6f6;
+      }
+      .testpopup .mapboxgl-popup-content {
+        background-color: #f6f6f6;
+      }
+      .testpopup .mapboxgl-popup-tip {
+        border-top-color: #f6f6f6;
+      }
     </style>
   </head>
   <body>
@@ -87,7 +96,10 @@
         'pk.eyJ1IjoiYmFyYmFyYTgwOCIsImEiOiJjbDJtcDI1OHUwdnVrM2pycTY2M2V5YjJiIn0.LTbI07MypH0XanrHpHTlug'
 
       const buildPopup = (place) => {
-        const popup = new mapboxgl.Popup({ maxWidth: '500px' })
+        const popup = new mapboxgl.Popup({
+          maxWidth: '500px',
+          className: 'testpopup',
+        })
         popup.setHTML(buildPopupHTML(place))
         return popup
       }
@@ -95,7 +107,7 @@
       const buildPopupHTML = (place) => {
         const { label, image } = place
         return `
-                <div>
+                <div >
                   <h2>${label}</h2>
                   <div style="width:400px; height:400px;">
                     <img src=${image} alt=${label} style="width:100%; height:100%;object-fit:scale-down;" />
