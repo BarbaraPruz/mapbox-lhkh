@@ -73,7 +73,6 @@
           marker: null,
           image: 'assets/images/alaeula3.jpg',
           icon: './assets/icons/tree.png',
-          offset: [-200, 100],
         },
         hawea: {
           label: 'Hawea Heaiau',
@@ -81,7 +80,6 @@
           marker: null,
           image: 'assets/images/heiau.jpg',
           icon: './assets/icons/heaiau.png',
-          offset: [200, 100],
         },
         kaiwi: {
           label: 'Ka Iwi Coastline',
@@ -114,7 +112,6 @@
           maxWidth: '500px',
           className: 'testpopup',
         }
-        if (place.offset) props.offset = place.offset
         const popup = new mapboxgl.Popup(props)
         popup.setHTML(buildPopupHTML(place))
         return popup
