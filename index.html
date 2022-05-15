@@ -37,6 +37,13 @@
       .testpopup .mapboxgl-popup-tip {
         border-top-color: #f6f6f6;
       }
+      .marker {
+        display: block;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0;
+      }
     </style>
   </head>
   <body>
@@ -62,33 +69,40 @@
       const placesList = {
         wetlands: {
           label: 'Keawawa Wetlands',
-          loc: [-157.70603082595395, 21.288198161959343],
+          loc: [-157.70691151486523, 21.290554203302435],
           marker: null,
           image: 'assets/images/alaeula3.jpg',
+          icon: './assets/icons/tree.png',
+          offset: [-200, 100],
         },
         hawea: {
           label: 'Hawea Heaiau',
-          loc: [-157.70517203226035, 21.28788658363102],
+          loc: [-157.7045774750442, 21.28922896260015],
           marker: null,
           image: 'assets/images/heiau.jpg',
+          icon: './assets/icons/heaiau.png',
+          offset: [200, 100],
         },
         kaiwi: {
           label: 'Ka Iwi Coastline',
           loc: [-157.65671287191415, 21.303521276031532],
           marker: null,
           image: 'assets/images/kaiwi.jpeg',
+          icon: './assets/icons/mountain.png',
         },
         paikoRidge: {
           label: 'Paiko Ridge',
           loc: [-157.72767071638125, 21.29151426434801],
           marker: null,
           image: 'assets/images/wall.jpeg',
+          icon: './assets/icons/mountain.png',
         },
         nursery: {
           label: `Aloha 'Aina 'O Kamilo Nui Nursery`,
           loc: [-157.69480882031755, 21.308139635919417],
           marker: null,
           image: './assets/images/nursery.jpeg',
+          icon: './assets/icons/flower.png',
         },
       }
 
@@ -96,10 +110,12 @@
         'pk.eyJ1IjoiYmFyYmFyYTgwOCIsImEiOiJjbDJtcDI1OHUwdnVrM2pycTY2M2V5YjJiIn0.LTbI07MypH0XanrHpHTlug'
 
       const buildPopup = (place) => {
-        const popup = new mapboxgl.Popup({
+        const props = {
           maxWidth: '500px',
           className: 'testpopup',
-        })
+        }
+        if (place.offset) props.offset = place.offset
+        const popup = new mapboxgl.Popup(props)
         popup.setHTML(buildPopupHTML(place))
         return popup
       }
@@ -125,7 +141,20 @@
       })
       // marker  - maybe better with map onLoad?
       for (let placeName in placesList) {
-        placesList[placeName].marker = new mapboxgl.Marker()
+        if (placesList[placeName].icon) {
+          const el = document.createElement('div')
+          const width = 32
+          const height = 32
+          el.className = 'marker'
+          el.style.backgroundImage = `url(${placesList[placeName].icon})`
+          el.style.width = `${width}px`
+          el.style.height = `${height}px`
+          el.style.backgroundSize = '100%'
+          placesList[placeName].marker = new mapboxgl.Marker(el)
+        } else {
+          placesList[placeName].marker = new mapboxgl.Marker()
+        }
+        placesList[placeName].marker
           .setLngLat(placesList[placeName].loc)
           .setPopup(buildPopup(placesList[placeName]))
           .addTo(map)
