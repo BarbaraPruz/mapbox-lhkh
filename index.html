@@ -67,15 +67,15 @@
       mapboxgl.accessToken =
         'pk.eyJ1IjoiYmFyYmFyYTgwOCIsImEiOiJjbDJtcDI1OHUwdnVrM2pycTY2M2V5YjJiIn0.LTbI07MypH0XanrHpHTlug'
       const defaultCenter = [-157.6942438755041, 21.295308977618873]
-      // ToDo: can we just add these images on mapbox side ?
+      // ToDo: can we just add these images in mapbox studio ?
       const images = [
         { url: './assets/icons/tree.png', id: 'tree' },
-        { url: './assets/icons/heaiau.png', id: 'heaiau' },
-        { url: './assets/icons/mountain.png', id: 'mauka' },
+        { url: './assets/icons/flare.png', id: 'flare' },
+        { url: './assets/icons/mauna.png', id: 'mauna' },
         { url: './assets/icons/flower.png', id: 'flower' },
         { url: './assets/icons/star.png', id: 'star' },
       ]
-
+      // ToDo: create correspondng datasource in mapbox studio
       const lhkhPlaces = [
         {
           type: 'Feature',
@@ -92,7 +92,7 @@
         {
           type: 'Feature',
           properties: {
-            icon: 'heaiau',
+            icon: 'flare',
             label: 'Hawea Heaiau',
             image: 'assets/images/heiau.jpg',
           },
@@ -104,7 +104,7 @@
         {
           type: 'Feature',
           properties: {
-            icon: 'mauka',
+            icon: 'mauna',
             label: 'Ka Iwi Coastline',
             image: 'assets/images/kaiwi.jpeg',
           },
@@ -116,7 +116,7 @@
         {
           type: 'Feature',
           properties: {
-            icon: 'mauka',
+            icon: 'mauna',
             label: 'Paiko Ridge',
             image: 'assets/images/wall.jpeg',
           },
@@ -230,7 +230,7 @@
           layout: {
             'icon-image': '{icon}',
             'icon-allow-overlap': true,
-            'icon-size': 0.5,
+            'icon-size': 0.6,
           },
         })
         // Add a layer showing the points of interest in places
@@ -256,6 +256,7 @@
           while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
           }
+          // ToDo: position popup?
           new mapboxgl.Popup(popUpProps)
             .setLngLat(coordinates)
             .setHTML(buildPopupHTML(properties))
