@@ -74,8 +74,10 @@
     </section>
 
     <script>
+      // mapboxgl.accessToken =
+      // 'pk.eyJ1IjoiYmFyYmFyYTgwOCIsImEiOiJjbDJtcDI1OHUwdnVrM2pycTY2M2V5YjJiIn0.LTbI07MypH0XanrHpHTlug' // my token
       mapboxgl.accessToken =
-        'pk.eyJ1IjoiYmFyYmFyYTgwOCIsImEiOiJjbDJtcDI1OHUwdnVrM2pycTY2M2V5YjJiIn0.LTbI07MypH0XanrHpHTlug'
+        'pk.eyJ1IjoibGhraCIsImEiOiJjbDNkaDdtZDcwMXQ5M2RuMzZpZmxjaWp1In0.2BK-5bO3mJtPOdMJ36h38w' // sony's token
       const defaultCenter = [-157.6942438755041, 21.295308977618873]
       // ToDo: can we just add these images in mapbox studio ?
       const images = [
@@ -199,8 +201,8 @@
 
       const map = new mapboxgl.Map({
         container: 'map', // container id in html. cannot have child elements
-        //  style: 'mapbox://styles/mapbox/outdoors-v11',
-        style: 'mapbox://styles/barbara808/cl2txh3jf002j14qemvwbgn77',
+        // style: 'mapbox://styles/barbara808/cl2txh3jf002j14qemvwbgn77', // my test
+        style: 'mapbox://styles/lhkh/cl3nl6434000614lkilm19bbl', // sony's test
         center: defaultCenter,
         zoom: 13,
         //pitch: 45,
