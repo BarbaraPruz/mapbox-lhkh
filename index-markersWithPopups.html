@@ -34,21 +34,14 @@
         height: 100%;
         width: 100%;
       }
-      .map-overlay {
-        position: absolute;
-        width: auto;
-        top: 140px;
-        left: 50px;
+      .testpopup {
+        background: #f6f6f6;
       }
-      .map-overlay-inner {
-        background-color: #fff;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        border-radius: 3px;
-        padding: 20px;
-        min-height: 30vh;
+      .testpopup .mapboxgl-popup-content {
+        background-color: #f6f6f6;
       }
-      .nodisplay {
-        display: none;
+      .testpopup .mapboxgl-popup-tip {
+        border-top-color: #f6f6f6;
       }
     </style>
   </head>
@@ -68,16 +61,11 @@
         </select>
       </div>
       <div id="map"></div>
-      <div class="map-overlay">
-        <div class="map-overlay-inner nodisplay" id="overlay"></div>
-      </div>
     </section>
 
     <script>
-      // mapboxgl.accessToken =
-      // 'pk.eyJ1IjoiYmFyYmFyYTgwOCIsImEiOiJjbDJtcDI1OHUwdnVrM2pycTY2M2V5YjJiIn0.LTbI07MypH0XanrHpHTlug' // my token
       mapboxgl.accessToken =
-        'pk.eyJ1IjoibGhraCIsImEiOiJjbDNkaDdtZDcwMXQ5M2RuMzZpZmxjaWp1In0.2BK-5bO3mJtPOdMJ36h38w' // sony's token
+        'pk.eyJ1IjoiYmFyYmFyYTgwOCIsImEiOiJjbDJtcDI1OHUwdnVrM2pycTY2M2V5YjJiIn0.LTbI07MypH0XanrHpHTlug'
       const defaultCenter = [-157.6942438755041, 21.295308977618873]
       // ToDo: can we just add these images in mapbox studio ?
       const images = [
@@ -177,6 +165,11 @@
         },
       ]
 
+      const popUpProps = {
+        maxWidth: '500px',
+        className: 'testpopup',
+      }
+
       const buildPopupHTML = (properties) => {
         const { label, image, description } = properties
         if (image) {
@@ -201,8 +194,8 @@
 
       const map = new mapboxgl.Map({
         container: 'map', // container id in html. cannot have child elements
-        // style: 'mapbox://styles/barbara808/cl2txh3jf002j14qemvwbgn77', // my test
-        style: 'mapbox://styles/lhkh/cl3nl6434000614lkilm19bbl', // sony's test
+        //  style: 'mapbox://styles/mapbox/outdoors-v11',
+        style: 'mapbox://styles/barbara808/cl2txh3jf002j14qemvwbgn77',
         center: defaultCenter,
         zoom: 13,
         //pitch: 45,
@@ -258,15 +251,34 @@
         map.on('click', 'places', (e) => {
           const coordinates = e.features[0].geometry.coordinates.slice()
           const properties = e.features[0].properties
-          overlay.innerHTML = buildPopupHTML(properties)
-          overlay.classList.remove('nodisplay')
+          // Following code from mapbox sample. Not sure when this problem can occur!
+          // Ensure that if the map is zoomed out such that multiple
+          // copies of the feature are visible, the popup appears
+          // over the copy being pointed to.
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
+          }
+          // ToDo: position popup?
+          new mapboxgl.Popup(popUpProps)
+            .setLngLat(coordinates)
+            .setHTML(buildPopupHTML(properties))
+            .addTo(map)
         })
 
         map.on('click', 'poi', (e) => {
           const coordinates = e.features[0].geometry.coordinates.slice()
           const properties = e.features[0].properties
-          overlay.innerHTML = buildPopupHTML(properties)
-          overlay.classList.remove('nodisplay')
+          // Following code from mapbox sample. Not sure when this problem can occur!
+          // Ensure that if the map is zoomed out such that multiple
+          // copies of the feature are visible, the popup appears
+          // over the copy being pointed to.
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
+          }
+          new mapboxgl.Popup(popUpProps)
+            .setLngLat(coordinates)
+            .setHTML(buildPopupHTML(properties))
+            .addTo(map)
         })
 
         // More code copied from mapbox sample. Not sure when cursor would be out of places layer?
@@ -307,8 +319,6 @@
           console.log('how did this happen', placeSelector.value)
         }
       }
-
-      const overlay = document.getElementById('overlay')
     </script>
   </body>
 </html>
