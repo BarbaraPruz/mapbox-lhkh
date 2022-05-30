@@ -19,3 +19,11 @@
 8. In Layer - Style tab select `Placement` tab. Set `Allow icon overlap` to `True`
 
 Icons should be visible on map. You may need to refresh map.
+
+## Issues encoutered when mapping styles with mapBox studio :lady_beetle:
+
+- :bug: Missing points on created map style: remove style and tileset, recreat tileset and style in mapBox studio from previous dataset getjson file. Refresh browser after each change was made or wait a few minutes between each changes. Browser cache might have some unexpected side effects on mapBox studio.
+
+- :ant: Dataset not show any points: remove previously created dataset, refresh browser and wait a moment before reloading the geojson file. Suggest resname the local geojson file before uploading.
+
+- :turtle: be extremly patient for anything else not make sense in mapBox studio :angry:
