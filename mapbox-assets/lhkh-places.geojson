@@ -17,7 +17,7 @@
       "type": "Feature",
       "properties": {
         "icon": "flare",
-        "label": "Hawea Heaiau",
+        "label": "Hawea Heiau",
         "image": "assets/images/heiau.jpg"
       },
       "geometry": {
