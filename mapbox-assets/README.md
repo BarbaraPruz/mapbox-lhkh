@@ -27,3 +27,11 @@ Icons should be visible on map. You may need to refresh map.
 - :ant: Dataset not show any points: remove previously created dataset, refresh browser and wait a moment before reloading the geojson file. Suggest resname the local geojson file before uploading.
 
 - :turtle: be extremly patient for anything else not make sense in mapBox studio :angry:
+
+## Sizing the marker icon based on zoom level
+
+<p align="center"><img src="./images/readme-markerIconOnZoomLevel.png"></p>
+
+-- In mapBox studio styles editor, choose your layer with the markers. Go to style, icon, size and set the zoom range.
+
+-- Suggest to set 2 stops and use exponential for rate of change.
