@@ -58,7 +58,7 @@
         <h2 class="places-title">Places</h2>
         <select name="place" id="placeSelector">
           <option value="" disabled selected hidden>Choose a place</option>
-          <option value="Hawea Heaiau">Hawea Heaiau</option>
+          <option value="Hawea Heiau">Hawea Heiau</option>
           <option value="Ka Iwi Coastline">Ka Iwi Coastline</option>
           <option value="Aloha 'Aina 'O Kamilo Nui Nursery">
             Kamilonui Valley - Aloha 'Aina 'O Kamilo Nui Nursery
@@ -91,36 +91,134 @@
           21.308139635919417,
         ],
       }
-      // ToDo: can we just add these images in mapbox studio ?
-      const images = [{ url: './assets/icons/star.png', id: 'star' }]
       // ToDo: create correspondng datasource in mapbox studio
-      const pointsOfInterest = [
+      /*      const lhkhPlaces = [
         {
           type: 'Feature',
           properties: {
-            icon: 'star',
-            label: 'bulrush',
-            description: '...about bulrush here....',
+            icon: 'tree',
+            label: 'Keawawa Wetlands',
+            image: 'assets/images/alaeula3.jpg',
           },
           geometry: {
             type: 'Point',
-            coordinates: [-157.70612452810917, 21.28804898561212],
+            coordinates: [-157.70635333019422, 21.288235118069082],
           },
         },
         {
           type: 'Feature',
           properties: {
-            icon: 'star',
-            label: '‘alae ‘ula',
-            description: '...about ‘alae ‘ula here....',
+            icon: 'flare',
+            label: 'Hawea Heiau',
+            image: 'assets/images/heiau.jpg',
           },
           geometry: {
             type: 'Point',
-            coordinates: [-157.70598409485427, 21.288522275951706],
+            coordinates: [-157.7049428616317, 21.287605156975374],
+          },
+        },
+        {
+          type: 'Feature',
+          properties: {
+            icon: 'mauna',
+            label: 'Ka Iwi Coastline',
+            image: 'assets/images/kaiwi.jpeg',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [-157.65671287191415, 21.303521276031532],
+          },
+        },
+        {
+          type: 'Feature',
+          properties: {
+            icon: 'mauna',
+            label: 'Paiko Ridge',
+            image: 'assets/images/wall.jpeg',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [-157.72767071638125, 21.29151426434801],
+          },
+        },
+        {
+          type: 'Feature',
+          properties: {
+            icon: 'flower',
+            label: `Aloha 'Aina 'O Kamilo Nui Nursery`,
+            image: './assets/images/nursery.jpeg',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [-157.69480882031755, 21.308139635919417],
           },
         },
       ]
 
+      const pointsOfInterest = [
+        {
+          type: 'Feature',
+          properties: {
+            icon: 'duck',
+            label: 'wetland birds',
+            description: '...about birds found in wetlands....',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [-157.70634984545083, 21.288508800221607],
+          },
+        },
+        {
+          type: 'Feature',
+          properties: {
+            icon: 'palmtree',
+            label: 'dryland forest',
+            description: '...about drylands forest ....',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [-157.7054768816594, 21.288746040613958],
+          },
+        },
+        {
+          type: 'Feature',
+          properties: {
+            icon: 'palmtree',
+            label: 'coconut tree grove',
+            description: '...about the coconut trees ....',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [-157.7055860021333, 21.288011723871094],
+          },
+        },
+        {
+          type: 'Feature',
+          properties: {
+            icon: 'vase',
+            label: 'heiau petroglyph',
+            description: '...about heiau petroglyphs ....',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [-157.70497977727814, 21.28781967119494],
+          },
+        },
+        {
+          type: 'Feature',
+          properties: {
+            icon: 'vase',
+            label: 'heiau',
+            description:
+              '...maybe estimated location of main part of heiau that was destroyed ?',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [-157.70415531147518, 21.288508800221607],
+          },
+        },
+      ]
+ */
       const buildPopupHTML = (properties) => {
         const { label, image, description } = properties
         if (image) {
@@ -146,7 +244,8 @@
       const map = new mapboxgl.Map({
         container: 'map', // container id in html. cannot have child elements
         // style: 'mapbox://styles/barbara808/cl2txh3jf002j14qemvwbgn77', // my test
-        style: 'mapbox://styles/barbara808/cl3s0qnrj000614mw08k61u2h', // test layers created in studio
+        // style: 'mapbox://styles/barbara808/cl3s0qnrj000614mw08k61u2h', // test layer 1 created in studio
+        style: 'mapbox://styles/barbara808/cl3v3qawl000415rj6hpc0fp0', // test layer 2 created in studio
         // style: 'mapbox://styles/lhkh/cl3nl6434000614lkilm19bbl', // sony's test
         center: defaultCenter,
         zoom: 13,
@@ -155,41 +254,17 @@
       })
 
       map.on('load', () => {
+        map.setLayoutProperty('lhkh-points-of-interest', 'visibility', 'none')
         // ToDo: add images and sources in mapbox studio?
-        images.forEach((img) => {
-          map.loadImage(img.url, function (error, res) {
-            map.addImage(img.id, res)
-          })
-        })
-        map.addSource('poi', {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: pointsOfInterest,
-          },
-        })
         // ToDo: How to get icon to resize when zoomed out (or maybe hide layer after some point?)
-        // Add a layer showing the points of interest in places
-        map.addLayer({
-          id: 'poi',
-          type: 'symbol',
-          source: 'poi',
-          layout: {
-            'icon-image': '{icon}',
-            'icon-allow-overlap': true,
-            'icon-size': 0.4,
-            visibility: 'none',
-          },
-        })
-        //
-        map.on('click', 'lhkh-places', (e) => {
+        map.on('click', 'lhkh-places2', (e) => {
           const coordinates = e.features[0].geometry.coordinates.slice()
           const properties = e.features[0].properties
           overlay.innerHTML = buildPopupHTML(properties)
           overlay.classList.remove('nodisplay')
         })
 
-        map.on('click', 'poi', (e) => {
+        map.on('click', 'lhkh-points-of-interest', (e) => {
           const coordinates = e.features[0].geometry.coordinates.slice()
           const properties = e.features[0].properties
           overlay.innerHTML = buildPopupHTML(properties)
@@ -198,11 +273,11 @@
 
         // More code copied from mapbox sample. Not sure when cursor would be out of places layer?
         // Change the cursor to a pointer when the mouse is over the places layer.
-        map.on('mouseenter', 'lhkh-places', () => {
+        map.on('mouseenter', 'lhkh-places2', () => {
           map.getCanvas().style.cursor = 'pointer'
         })
         // Change it back to a pointer when it leaves.
-        map.on('mouseleave', 'lhkh-places', () => {
+        map.on('mouseleave', 'lhkh-places2', () => {
           map.getCanvas().style.cursor = ''
         })
 
@@ -211,12 +286,20 @@
           ToDo: for smoother transition, try 'animating'
           map.setPaintProperty(layer id,'raster-opacity',opacity value);
           */
-          if (map.getZoom() > 14) {
-            map.setLayoutProperty('lhkh-places', 'visibility', 'none')
-            map.setLayoutProperty('poi', 'visibility', 'visible')
+          if (map.getZoom() > 15) {
+            map.setLayoutProperty('lhkh-places2', 'visibility', 'none')
+            map.setLayoutProperty(
+              'lhkh-points-of-interest',
+              'visibility',
+              'visible',
+            )
           } else {
-            map.setLayoutProperty('lhkh-places', 'visibility', 'visible')
-            map.setLayoutProperty('poi', 'visibility', 'none')
+            map.setLayoutProperty('lhkh-places2', 'visibility', 'visible')
+            map.setLayoutProperty(
+              'lhkh-points-of-interest',
+              'visibility',
+              'none',
+            )
           }
         })
       })
@@ -224,9 +307,9 @@
       const placeSelector = document.getElementById('placeSelector')
       // To Do: if layer is created in script, then populate selector options from lhkhPlaces
       placeSelector.onchange = () => {
-        const placeLocation = placesLocations[placeSelector.value]
-        if (placeLocation) {
-          map.flyTo({ center: placeLocation, zoom: 15 })
+        const place = placesLocations[placeSelector.value]
+        if (place) {
+          map.flyTo({ center: place, zoom: 16 })
         } else {
           console.log('how did this happen', placeSelector.value)
         }

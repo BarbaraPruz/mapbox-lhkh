@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "icon": "duck",
+        "label": "wetland birds",
+        "description": "...about birds found in wetlands...."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-157.70634984545083, 21.288508800221607]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "icon": "palmtree",
+        "label": "dryland forest",
+        "description": "...about drylands forest ...."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-157.7054768816594, 21.288746040613958]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "icon": "palmtree",
+        "label": "coconut tree grove",
+        "description": "...about the coconut trees ...."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-157.7055860021333, 21.288011723871094]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "icon": "vase",
+        "label": "heiau petroglyph",
+        "description": "...about heiau petroglyphs ...."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-157.70497977727814, 21.28781967119494]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "icon": "vase",
+        "label": "heiau",
+        "description": "...maybe estimated location of main part of heiau that was destroyed ?"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-157.70415531147518, 21.288508800221607]
+      }
+    }
+  ]
+}
