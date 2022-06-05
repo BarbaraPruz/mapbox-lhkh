@@ -79,11 +79,11 @@
       //mapboxgl.accessToken =
       //  'pk.eyJ1IjoibGhraCIsImEiOiJjbDNkaDdtZDcwMXQ5M2RuMzZpZmxjaWp1In0.2BK-5bO3mJtPOdMJ36h38w' // sony's token
       const defaultCenter = [-157.6942438755041, 21.295308977618873]
-      const images = [
+      /*       const images = [
         { url: './assets/icons/duck.png', id: 'duck' },
         { url: './assets/icons/palm-tree.png', id: 'palmtree' },
         { url: './assets/icons/account-balance.png', id: 'accountbalance' },
-      ]
+      ] */
 
       // places locations just used for the dropdown to go to a place
       const placesLocations = {
@@ -97,7 +97,7 @@
         ],
       }
       // ToDo: create correspondng datasource in mapbox studio
-      const pointsOfInterest = [
+      /*       const pointsOfInterest = [
         {
           type: 'Feature',
           properties: {
@@ -159,7 +159,7 @@
             coordinates: [-157.70415531147518, 21.288508800221607],
           },
         },
-      ]
+      ]*/
 
       const buildPopupHTML = (properties) => {
         const { label, image, description } = properties
@@ -195,29 +195,29 @@
 
       map.on('load', () => {
         // ToDo: add images and sources in mapbox studio?
-        images.forEach((img) => {
-          map.loadImage(img.url, function (error, res) {
-            map.addImage(img.id, res)
-          })
-        })
-        map.addSource('poi', {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: pointsOfInterest,
-          },
-        })
-        map.addLayer({
-          id: 'poi',
-          type: 'symbol',
-          source: 'poi',
-          layout: {
-            'icon-image': '{icon}',
-            'icon-allow-overlap': true,
-            'icon-size': 0.4,
-            visibility: 'none',
-          },
-        })
+        // images.forEach((img) => {
+        //   map.loadImage(img.url, function (error, res) {
+        //     map.addImage(img.id, res)
+        //   })
+        // })
+        // map.addSource('poi', {
+        //   type: 'geojson',
+        //   data: {
+        //     type: 'FeatureCollection',
+        //     features: pointsOfInterest,
+        //   },
+        // })
+        // map.addLayer({
+        //   id: 'poi',
+        //   type: 'symbol',
+        //   source: 'poi',
+        //   layout: {
+        //     'icon-image': '{icon}',
+        //     'icon-allow-overlap': true,
+        //     'icon-size': 0.4,
+        //     visibility: 'none',
+        //   },
+        // })
         // ToDo: How to get icon to resize when zoomed out (or maybe hide layer after some point?)
         map.on('click', 'lhkh-places', (e) => {
           const coordinates = e.features[0].geometry.coordinates.slice()
@@ -226,7 +226,7 @@
           overlay.classList.remove('nodisplay')
         })
 
-        map.on('click', 'poi', (e) => {
+        map.on('click', 'lhkh-poi', (e) => {
           const coordinates = e.features[0].geometry.coordinates.slice()
           const properties = e.features[0].properties
           overlay.innerHTML = buildPopupHTML(properties)
@@ -250,10 +250,10 @@
           */
           if (map.getZoom() > 15) {
             map.setLayoutProperty('lhkh-places', 'visibility', 'none')
-            map.setLayoutProperty('poi', 'visibility', 'visible')
+            map.setLayoutProperty('lhkh-poi', 'visibility', 'visible')
           } else {
             map.setLayoutProperty('lhkh-places', 'visibility', 'visible')
-            map.setLayoutProperty('poi', 'visibility', 'none')
+            map.setLayoutProperty('lhkh-poi', 'visibility', 'none')
           }
         })
       })
