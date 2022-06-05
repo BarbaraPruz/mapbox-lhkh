@@ -79,11 +79,6 @@
       //mapboxgl.accessToken =
       //  'pk.eyJ1IjoibGhraCIsImEiOiJjbDNkaDdtZDcwMXQ5M2RuMzZpZmxjaWp1In0.2BK-5bO3mJtPOdMJ36h38w' // sony's token
       const defaultCenter = [-157.6942438755041, 21.295308977618873]
-      /*       const images = [
-        { url: './assets/icons/duck.png', id: 'duck' },
-        { url: './assets/icons/palm-tree.png', id: 'palmtree' },
-        { url: './assets/icons/account-balance.png', id: 'accountbalance' },
-      ] */
 
       // places locations just used for the dropdown to go to a place
       const placesLocations = {
@@ -96,70 +91,6 @@
           21.308139635919417,
         ],
       }
-      // ToDo: create correspondng datasource in mapbox studio
-      /*       const pointsOfInterest = [
-        {
-          type: 'Feature',
-          properties: {
-            icon: 'duck',
-            label: 'wetland birds',
-            description: '...about birds found in wetlands....',
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: [-157.70634984545083, 21.288508800221607],
-          },
-        },
-        {
-          type: 'Feature',
-          properties: {
-            icon: 'palmtree',
-            label: 'dryland forest',
-            description: '...about drylands forest ....',
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: [-157.7054768816594, 21.288746040613958],
-          },
-        },
-        {
-          type: 'Feature',
-          properties: {
-            icon: 'palmtree',
-            label: 'coconut tree grove',
-            description: '...about the coconut trees ....',
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: [-157.7055860021333, 21.288011723871094],
-          },
-        },
-        {
-          type: 'Feature',
-          properties: {
-            icon: 'accountbalance',
-            label: 'heiau petroglyph',
-            description: '...about heiau petroglyphs ....',
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: [-157.70497977727814, 21.28781967119494],
-          },
-        },
-        {
-          type: 'Feature',
-          properties: {
-            icon: 'accountbalance',
-            label: 'heiau',
-            description:
-              '...maybe estimated location of main part of heiau that was destroyed ?',
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: [-157.70415531147518, 21.288508800221607],
-          },
-        },
-      ]*/
 
       const buildPopupHTML = (properties) => {
         const { label, image, description } = properties
@@ -185,8 +116,8 @@
 
       const map = new mapboxgl.Map({
         container: 'map', // container id in html. cannot have child elements
-        style: 'mapbox://styles/barbara808/cl3zeh40g000215o4d4etermv', // test layer created in studio
-        // style: 'mapbox://styles/lhkh/cl3nl6434000614lkilm19bbl', // sony's test
+        style: 'mapbox://styles/barbara808/cl40ugi54000d14rv856afxcn', // test layer created in studio
+        // style: 'mapbox://styles/lhkh/cl3nl6434000614lkilm19bbl', // sony's test - no layers!
         center: defaultCenter,
         zoom: 13,
         //pitch: 45,
@@ -194,31 +125,9 @@
       })
 
       map.on('load', () => {
-        // ToDo: add images and sources in mapbox studio?
-        // images.forEach((img) => {
-        //   map.loadImage(img.url, function (error, res) {
-        //     map.addImage(img.id, res)
-        //   })
-        // })
-        // map.addSource('poi', {
-        //   type: 'geojson',
-        //   data: {
-        //     type: 'FeatureCollection',
-        //     features: pointsOfInterest,
-        //   },
-        // })
-        // map.addLayer({
-        //   id: 'poi',
-        //   type: 'symbol',
-        //   source: 'poi',
-        //   layout: {
-        //     'icon-image': '{icon}',
-        //     'icon-allow-overlap': true,
-        //     'icon-size': 0.4,
-        //     visibility: 'none',
-        //   },
-        // })
-        // ToDo: How to get icon to resize when zoomed out (or maybe hide layer after some point?)
+        // To Do: set up so POI not shown at all until zoomed.
+        // Possible solution is to set map to not visible until everything is set up.
+        map.setLayoutProperty('lhkh-poi', 'visibility', 'none')
         map.on('click', 'lhkh-places', (e) => {
           const coordinates = e.features[0].geometry.coordinates.slice()
           const properties = e.features[0].properties

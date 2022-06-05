@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-        "icon": "starrate",
+        "icon": "duck",
         "label": "wetland birds",
         "description": "...about birds found in wetlands...."
       },
@@ -16,7 +16,7 @@
     {
       "type": "Feature",
       "properties": {
-        "icon": "starrate",
+        "icon": "palm-tree",
         "label": "dryland forest",
         "description": "...about drylands forest ...."
       },
@@ -28,7 +28,7 @@
     {
       "type": "Feature",
       "properties": {
-        "icon": "starrate",
+        "icon": "palm-tree",
         "label": "coconut tree grove",
         "description": "...about the coconut trees ...."
       },
@@ -40,7 +40,7 @@
     {
       "type": "Feature",
       "properties": {
-        "icon": "starrate",
+        "icon": "ancient-vase",
         "label": "heiau petroglyph",
         "description": "...about heiau petroglyphs ...."
       },
@@ -52,7 +52,7 @@
     {
       "type": "Feature",
       "properties": {
-        "icon": "starrate",
+        "icon": "ancient-vase",
         "label": "heiau",
         "description": "...maybe estimated location of main part of heiau that was destroyed ?"
       },

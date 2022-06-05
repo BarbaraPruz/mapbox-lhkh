@@ -2,6 +2,8 @@
 
 Experiment with mapbox gl js sdk apis.
 
+**NOTE** folder assets/icons is not used when map layers are built in studio.
+
 ## reference-html folder
 
 Several versions of similar html page have been built using different mapbox features. Corresponding HTML is saved just as a reference.

@@ -30,7 +30,7 @@ Icons should be visible on map. You may need to refresh map.
 
 ## Sizing the marker icon based on zoom level
 
-<p align="center"><img src="./images/readme-markerIconOnZoomLevel.png"></p>
+<p align="center"><img src="./readme-markerIconOnZoomLevel.png"></p>
 
 -- In mapBox studio styles editor, choose your layer with the markers. Go to style, icon, size and set the zoom range.
 
